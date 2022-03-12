@@ -1,0 +1,40 @@
+kind: pipeline
+type: docker
+name: vue-builder
+
+
+steps:
+  # 建立 npm 環境
+  - name: build-npm
+    image: node:14.16.0-slim
+    commands:
+      - echo "step in npm install .........."
+      - npm install
+      - echo "step in build project .........."
+      - npm run build
+      - ls -al
+    when:
+      branch:
+      - master
+      - develop
+
+  # build 自己的 image
+  - name: build-image
+    image: plugins/docker
+    settings:
+      username: giorann4056
+      password: UNNior40456
+      repo: giorann4056/vue-demo
+      tags: latest
+    when:
+      branch:
+      - master
+      - develop
+
+
+trigger:
+  branch:
+  - master
+  - develop
+  event:
+  - push
