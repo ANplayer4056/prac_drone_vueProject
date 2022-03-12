@@ -18,18 +18,18 @@ steps:
       - master
       - develop
 
-  # build 自己的 image
-  - name: build-image
-    image: plugins/docker
-    settings:
-      username: giorann4056
-      password: UNNior40456
-      repo: giorann4056/vue-demo
-      tags: latest
-    when:
-      branch:
-      - master
-      - develop
+  # # build 自己的 image
+  # - name: build-image
+  #   image: plugins/docker
+  #   settings:
+  #     username: giorann4056
+  #     password: UNNior40456
+  #     repo: giorann4056/vue-demo
+  #     tags: latest
+  #   when:
+  #     branch:
+  #     - master
+  #     - develop
 
 
 trigger:
