@@ -13,6 +13,9 @@ steps:
       - echo "step in build project .........."
       - npm run build
       - ls -al
+      - echo -n "${DRONE_COMMIT_SHA},latest" > .tags
+      - ls -al
+      - cat .tag
     when:
       branch:
       - master
@@ -24,8 +27,7 @@ steps:
     settings:
       username: giorann4056
       password: UNNior40456
-      repo: giorann4056/vue-demo
-      tags: ${DRONE_COMMIT_SHA}
+      repo: giorann4056/${DRONE_REPO_NAME}
     when:
       branch:
       - master
