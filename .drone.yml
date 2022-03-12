@@ -4,7 +4,7 @@ name: vue-builder
 
 
 steps:
-  # 建立 npm 環境 #
+  # 建立 npm 環境
   - name: build-npm
     image: node:14.16.0-slim
     commands:
