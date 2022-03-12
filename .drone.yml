@@ -15,7 +15,7 @@ steps:
       - ls -al
       - echo -n "${DRONE_COMMIT_SHA},latest" > .tags
       - ls -al
-      - cat .tag
+      - cat .tags
     when:
       branch:
       - master
