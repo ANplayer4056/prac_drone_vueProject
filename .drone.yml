@@ -25,7 +25,7 @@ steps:
       username: giorann4056
       password: UNNior40456
       repo: giorann4056/vue-demo
-      auto_tag: true
+      tags: {DRONE_COMMIT_SHA}
     when:
       branch:
       - master
