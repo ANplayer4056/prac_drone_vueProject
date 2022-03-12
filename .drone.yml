@@ -4,7 +4,8 @@ name: vue-builder
 
 
 steps:
-  # 建立 npm 環境 #
+  # 建立 npm 環境 
+  # echo -n "${DRONE_COMMIT_SHA},latest" > .tags  把 tag 丟進去 tags 檔案內，一次可以更新自定義內的所有版號 ex: latest
   - name: build-npm
     image: node:14.16.0-slim
     commands:
@@ -22,12 +23,14 @@ steps:
       - develop
 
   # build 自己的 image
+  # ${DRONE_REPO_NAME} ===> 使用變數控制 (參考 :https://docs.drone.io/pipeline/environment/reference/)
+
   - name: build-image
     image: plugins/docker
     settings:
       username: giorann4056
       password: UNNior40456
-      repo: giorann4056/${DRONE_REPO_NAME}
+      repo: giorann4056/${DRONE_REPO_NAME} 
     when:
       branch:
       - master
