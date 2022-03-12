@@ -1,37 +1,38 @@
 kind: pipeline
-type: docker                          # 在 Docker 內部執行的管道命令
-name: publish                         # 自定義名稱  ==> 用途 : 區分不同類型的 runner
-                                      # 一個 pipeline 一個 pipeline 這樣區分
+type: docker
+name: vue-builder
+
+
 steps:
-  # 事件一
-  - name: host                        # 事件ㄧ的名稱(可自訂) 
-    image: alpine                     # 使用 alpine 容器
-    commands:                         # 欲執行的 shell 指令
-      - echo "now in host step"
-    when:                             # when(觸發條件)
-      status: [ success, failure]     # 無論 clone 成功或失敗，都會跑該事件
-  
-  - name: echo 
-    image: appleboy/drone-git-push
+  # 建立 npm 環境 #
+  - name: build-npm
+    image: node:14.16.0-slim
     commands:
-      -  echo "now in echo step"
-    when:
-      branch:                          # 當觸發條件為 master 分支時會執行的動作
-      - master
-  
-  - name: dev_action
-    image: appleboy/drone-git-push
-    commands:
-      - echo "dev action ...."
-      - pwd
+      - echo "step in npm install .........."
+      - npm install
+      - echo "step in build project .........."
+      - npm run build
       - ls -al
     when:
-      branch:                           # 當觸發條件為 develop 分支時會執行的動作
+      branch:
+      - master
       - develop
 
+  # # build 自己的 image
+  # - name: build-image
+  #   image: plugins/docker
+  #   settings:
+  #     username: giorann4056
+  #     password: UNNior40456
+  #     repo: giorann4056/vue-demo
+  #     tags: latest
+  #   when:
+  #     branch:
+  #     - master
+  #     - develop
 
-                                        # trigger(觸發條件) ==> 觸發條件權重高於 when
-trigger:                                # 觸發 pipeline 條件，分支為 master，且進行 push 動作
+
+trigger:
   branch:
   - master
   - develop
